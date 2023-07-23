@@ -1,5 +1,6 @@
 import { Field, Form, Formik, ErrorMessage } from "formik";
 import { stepperValidation } from "./validations/stepper-validation";
+import classNames from "classnames";
 
 function App() {
   return (
@@ -49,6 +50,10 @@ function App() {
             },
           ];
 
+          const handleStep = (step) => {
+            setFieldValue("step", step);
+          };
+
           return (
             <Form className="w-[500px] mx-auto py-4">
               <header className="grid grid-cols-3 gap-x-2.5 border border-zinc-400 rounded-md mb-10 p-4">
@@ -58,13 +63,36 @@ function App() {
 
                 {steps.map((step, index) => (
                   <button
+                    type="button"
+                    disabled={values.step < step.step}
+                    onClick={() => handleStep(step.step)}
                     key={index}
                     className="flex flex-col items-center justify-center gap-y-3"
                   >
-                    <div className="w-10 h-10 bg-gray-500 rounded-full flex justify-center items-center text-white">
-                      {step.step}
+                    <div
+                      className={classNames(
+                        "w-6 h-6 rounded-full flex justify-center items-center text-sm",
+                        {
+                          "bg-blue-200 text-green-600":
+                            values.step === step.step,
+                          "bg-green-200 text-green-600":
+                            values.step > step.step,
+                          "bg-zinc-200 text-zinc-700":
+                            values.step !== step.step,
+                        }
+                      )}
+                    >
+                      {values.step > step.step ? "✅" : step.step}
                     </div>
-                    <div className="text-sm">{step.title}</div>
+                    <div
+                      className={classNames("text-sm", {
+                        "text-blue-600": values.step === step.step,
+                        "text-green-600": values.step > step.step,
+                        " text-zinc-700": values.step !== step.step,
+                      })}
+                    >
+                      {step.title}
+                    </div>
                   </button>
                 ))}
               </header>
