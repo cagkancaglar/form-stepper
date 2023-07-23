@@ -1,11 +1,13 @@
-import { Field, Form, Formik } from "formik";
+import { Field, Form, Formik, ErrorMessage } from "formik";
+import { stepperValidation } from "./validations/stepper-validation";
 
 function App() {
   return (
     <div>
       <Formik
+        validationSchema={stepperValidation}
         initialValues={{
-          step: 3,
+          step: 1,
           lastStep: 3,
 
           // step 1
@@ -23,7 +25,7 @@ function App() {
           console.log("values", values);
         }}
       >
-        {({ values, setFieldValue }) => {
+        {({ values, setFieldValue, isValid, dirty }) => {
           const handlePrev = (e) => {
             setFieldValue("step", values.step - 1);
           };
@@ -43,30 +45,65 @@ function App() {
 
               {values.step === 1 && (
                 <div className="grid gap-2.5">
-                  <Field name="name" className="input" placeholder="name" />
-                  <Field
-                    name="surname"
-                    className="input"
-                    placeholder="surname"
-                  />
+                  <div>
+                    <Field name="name" className="input" placeholder="name" />
+                    <ErrorMessage
+                      name="name"
+                      component="small"
+                      className="block text-red-600 text-xs mt-1"
+                    />
+                  </div>
+                  <div>
+                    <Field
+                      name="surname"
+                      className="input"
+                      placeholder="surname"
+                    />
+                    <ErrorMessage
+                      name="surname"
+                      component="small"
+                      className="block text-red-600 text-xs mt-1"
+                    />
+                  </div>
                 </div>
               )}
 
               {values.step === 2 && (
                 <div className="grid gap-2.5">
-                  <Field name="age" className="input" placeholder="age" />
-                  <Field name="job" className="input" placeholder="job" />
+                  <div>
+                    <Field name="age" className="input" placeholder="age" />
+                    <ErrorMessage
+                      name="age"
+                      component="small"
+                      className="block text-red-600 text-xs mt-1"
+                    />
+                  </div>
+                  <div>
+                    <Field name="job" className="input" placeholder="job" />
+                    <ErrorMessage
+                      name="job"
+                      component="small"
+                      className="block text-red-600 text-xs mt-1"
+                    />
+                  </div>
                 </div>
               )}
 
               {values.step === 3 && (
                 <div className="grid gap-2.5">
-                  <Field
-                    name="about"
-                    component="textarea"
-                    className="textarea"
-                    placeholder="about"
-                  />
+                  <div>
+                    <Field
+                      name="about"
+                      component="textarea"
+                      className="textarea"
+                      placeholder="about"
+                    />
+                    <ErrorMessage
+                      name="about"
+                      component="small"
+                      className="block text-red-600 text-xs mt-1"
+                    />
+                  </div>
                 </div>
               )}
 
@@ -76,13 +113,20 @@ function App() {
                     Prev
                   </button>
                 )) || <div />}
-                {(values.step === values.lastStep && (
+                {values.step !== values.lastStep && (
+                  <button
+                    className="button"
+                    type="button"
+                    onClick={handleNext}
+                    disabled={!isValid || !dirty}
+                  >
+                    Next
+                  </button>
+                )}
+
+                {values.step === values.lastStep && (
                   <button className="button" type="submit">
                     Submit
-                  </button>
-                )) || (
-                  <button className="button" type="button" onClick={handleNext}>
-                    Next
                   </button>
                 )}
               </div>

@@ -4,12 +4,12 @@
 
 @layer components {
   .input {
-    @apply h-10 rounded px-4 outline-none border border-zinc-400 text-sm focus:border-black;
+    @apply h-10 rounded px-4 outline-none border border-zinc-400 text-sm focus:border-black w-full;
   }
   .textarea {
-    @apply rounded px-4 py-2.5 outline-none border border-zinc-400 text-sm focus:border-black resize-none
+    @apply rounded px-4 py-2.5 outline-none border border-zinc-400 text-sm focus:border-black resize-none w-full;
   }
-  .button{
-    @apply rounded h-10 bg-black text-white text-sm hover:opacity-80
+  .button {
+    @apply rounded h-10 bg-black text-white text-sm hover:opacity-80 disabled:opacity-50 ;
   }
 }
