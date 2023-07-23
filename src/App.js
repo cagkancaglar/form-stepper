@@ -34,8 +34,41 @@ function App() {
             setFieldValue("step", values.step + 1);
           };
 
+          const steps = [
+            {
+              step: 1,
+              title: "Personal Information",
+            },
+            {
+              step: 2,
+              title: "Survey",
+            },
+            {
+              step: 3,
+              title: "Details",
+            },
+          ];
+
           return (
             <Form className="w-[500px] mx-auto py-4">
+              <header className="grid grid-cols-3 gap-x-2.5 border border-zinc-400 rounded-md mb-10 p-4">
+                {/* {new Array(values.lastStep).fill("").map((_, index) => (
+                  <button key={index}>Step {index + 1}</button>
+                ))} */}
+
+                {steps.map((step, index) => (
+                  <button
+                    key={index}
+                    className="flex flex-col items-center justify-center gap-y-3"
+                  >
+                    <div className="w-10 h-10 bg-gray-500 rounded-full flex justify-center items-center text-white">
+                      {step.step}
+                    </div>
+                    <div className="text-sm">{step.title}</div>
+                  </button>
+                ))}
+              </header>
+
               <header className="mb-4">
                 <h3 className="text-lg font-medium text-zinc-700">
                   {" "}
